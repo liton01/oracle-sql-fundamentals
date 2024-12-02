@@ -177,6 +177,32 @@ MODIFY column_name type constraint;
 ALTER TABLE members
 MODIFY last_name VARCHAR2 (100) NOT NULL;
 
+How to create Sequence in Oracle 
+-------------------------------------
+CREATE SEQUENCE seq_employee_id
+START WITH 1
+INCREMENT BY 1
+MAXVALUE 1000
+NOCYCLE
+NOCACHE;
+
+
+SELECT seq_employee_id.NEXTVAL FROM DUAL;
+
+
+create table emp
+(
+emp_id number default seq_employee_id.NEXTVAL not null,
+emp_name varchar2(50),
+salary number(18,2)
+);
+
+insert into emp (emp_name, salary) values ('Rifath', 50000);
+insert into emp (emp_name, salary) values('Rishad', 524145);
+insert into emp (emp_name, salary) values ('Rifkath', 542452);
+
+select * from emp 
+
 
 
 
