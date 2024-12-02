@@ -204,5 +204,42 @@ insert into emp (emp_name, salary) values ('Rifkath', 542452);
 select * from emp 
 
 
+-------Creating View-------
+-------------------
+CREATE VIEW ভিউ_নাম AS
+SELECT কলাম_নাম1, কলাম_নাম2, ...
+FROM টেবিল_নাম
+WHERE শর্ত;
+
+CREATE VIEW view_department_10 AS
+SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY
+FROM EMPLOYEES
+WHERE DEPARTMENT_ID = 10;
+
+SELECT * FROM view_department_10;
+----Complex View----
+CREATE VIEW view_department_salary AS
+SELECT DEPARTMENT_ID, SUM(SALARY) AS TOTAL_SALARY
+FROM EMPLOYEES
+GROUP BY DEPARTMENT_ID;
+
+SELECT * FROM view_department_salary;
+
+select * from EMPLOYEES
+
+---View আপডেট করা---
+কিছু ভিউ আপডেট করা যায় যদি তা updatable view হয়। উদাহরণস্বরূপ:
+-----------------------------------------------
+
+UPDATE view_department_10
+SET SALARY = SALARY + 1000
+WHERE EMPLOYEE_ID = 101;
+
+---View মুছে ফেলা---
+ভিউ ডিলিট করতে DROP VIEW কমান্ড ব্যবহার করা হয়:
+-------------------------------------------
+
+DROP VIEW view_department_10;
+
 
 
