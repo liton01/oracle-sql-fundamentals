@@ -227,19 +227,80 @@ SELECT * FROM view_department_salary;
 
 select * from EMPLOYEES
 
----View আপডেট করা---
-কিছু ভিউ আপডেট করা যায় যদি তা updatable view হয়। উদাহরণস্বরূপ:
------------------------------------------------
+--Creating a View
+ CREATE OR REPLACE view empvu80
+ AS 
+   SELECT employee_id, last_name, salary
+   FROM employees
+   WHERE department_id = 80
 
-UPDATE view_department_10
-SET SALARY = SALARY + 1000
-WHERE EMPLOYEE_ID = 101;
 
----View মুছে ফেলা---
-ভিউ ডিলিট করতে DROP VIEW কমান্ড ব্যবহার করা হয়:
--------------------------------------------
+ --Retrieving Data from a View
+ SELECT *FROM empvu80;
 
-DROP VIEW view_department_10;
+ --Create a view by using column aliases
+ CREATE VIEW salvu50
+ AS 
+   SELECT employee_id ID_NUMBER, last_name NAME,
+   salary*12 ANN_SALARY
+   FROM employees
+   WHERE department_id = 50
 
+
+ --Retrieving Data from a View
+ SELECT *FROM salvu50;
+
+
+ --The columns from this view by the given alias names
+ CREATE OR REPLACE VIEW salvu50 (ID_NUMBER, NAME, ANN_SALARY)
+ AS 
+   SELECT employee_id, last_name, salary*12
+   FROM employees
+   WHERE department_id = 50
+
+ --Retrieving Data from a View
+ SELECT *FROM salvu50;
+
+ --Describe the structure of the view
+ DESCRIBE salvu50;
+
+ --View Information
+ DESCRIBE user_views
+
+ --Retrieving Data from user_views
+ SELECT *--view_name 
+ FROM user_views;
+
+ --Retriving text content from user_views for a specific view
+ SELECT text FROM user_views
+ WHERE view_name = 'EMP_DETAILS_VIEW';
+
+ --Using the WITH CHECK OPTION Clause
+ CREATE OR REPLACE VIEW empvu20
+ AS 
+   SELECT *
+   FROM employees
+   WHERE department_id = 20
+   WITH CHECK OPTION CONSTRAINT empvu20_ck
+
+
+ UPDATE empvu20
+ SET department_id = 10
+ WHERE employee_id = 201;
+
+ --Denying DML Operations
+ CREATE OR REPLACE VIEW empvu10
+   (employee_number, employee_name, job_title)
+ AS 
+   SELECT employee_id, last_name, job_id
+   FROM employees
+   WHERE department_id = 10
+   WITH READ ONLY ;
+   
+ DELETE FROM empvu10
+ WHERE employee_number = 200;  
+
+ --Removing a View
+ DROP VIEW empvu10;
 
 
