@@ -304,3 +304,79 @@ select * from EMPLOYEES
  DROP VIEW empvu10;
 
 
+table constraint format:
+------------------------------------
+alter table Your_table_name
+add constraint 
+    foreignKey:
+        constraint_name(i.e fk_foreign_table_short_local_table_shortform )
+    primarykey:
+        constraint_name(i.e pk_local_table_shortform )
+    uniqueKey
+        constraint_name(i.e uk_column(s)_short_form_local_table_shortform )
+foreign key (local_table_column_Id)
+primary key (local_table_column_Id)
+unique (local_table_column(s))
+
+if_foreign_key:
+references foreign_table_name(foreign_table_column_id)
+
+
+example of Customer + bank_account
+/
+
+--drop table customer purge;
+
+create table customer
+(
+    id number(16),
+    customer_name varchar2(100)
+);
+
+alter table customer
+add constraint pk_custmr
+primary key (id);
+
+
+create table bank_account
+(
+    id number(16),
+    customer_id number(16),
+    bank_acc_no varchar2(100),
+    branch_name varchar2(100)
+);
+
+--primary key constraint
+alter table bank_account
+add constraint pk_bnkacc
+primary key (id);
+
+--foreign key
+alter table bank_account
+add constraint fk_custmr_bnkacc
+foreign key (customer_id)
+references customer(id);
+
+--unique key
+alter table bank_account
+add constraint uk_bnkacno_brnchnam_bnkacc
+unique (bank_acc_no,branch_name);
+
+--in combined mode
+--primary key constraint
+alter table bank_account add (
+    --primary key
+    constraint pk_bnkacc
+    primary key (id)
+    
+    --foreign key
+   ,constraint fk_custmr_bnkacc
+    foreign key (customer_id)
+    references customer(id)
+    
+    --unique key
+   ,constraint uk_bnkacno_brnchnam_bnkacc
+    unique (bank_acc_no,branch_name)
+);
+
+
